@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/index.css">
+    <title>Unsplash Random Photo</title>
+</head>
+<body>
+    <div class="left-line-style"></div>
+    <div class="right-line-style"></div>
+    <main>
+        <div class="center-line-style"></div>
+        <div class="image-header">
+            <a href="https://diegomantegazza.me" class="link-button">WEBSITE <img src="/img/link-arrow.svg"></a>
+            <h1><a target="_blank" href="https://unsplash.com/?utm_source=Random%20Photo&utm_medium=referral">UNSPLASH</a> RANDOM PHOTO</h1>
+        </div>
+        <div class="image-container">
+            <a target="_blank" href=<%=""+data.download_location+"?utm_source=Random%20Photo&utm_medium=referral"%>>
+                <div class="image">
+                    <div id="loader" class="loading-screen">
+                        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                    </div>
+                    <img onload="removeLoader()" id="main-image" src="<%= data.url %>">
+                </div>
+            </a>
+        </div>
+        <div class="image-footer">
+            <a href="/" class="link-button">NEW IMAGE</a>
+            <div class="author-link">
+                <a target="_blank" href=<%=""+data.download_location+"?utm_source=Random%20Photo&utm_medium=referral"%> class="link-button">SEE IMAGE <img src="/img/link-arrow.svg" alt=""></a>
+                <a target="_blank" href=<%="https://unsplash.com/it/@"+data.username+"?utm_source=Random%20Photo&utm_medium=referral"%> class="link-button">SEE AUTHOR <img src="/img/link-arrow.svg" alt=""></a>
+            </div>
+        </div>
+    </main>
+    <section class="info-section">
+        <div class="info-item">
+            <h2>CREATED</h2>
+            <p><%= data.created %></p>
+        </div>
+        <div class="info-item">
+            <h2>AUTHOR</h2>
+            <p><%= data.author %></p>
+        </div>
+        <div class="info-item">
+            <h2>VIEWS</h2>
+            <p><%= data.views %></p>
+        </div>
+        <div class="info-item">
+            <h2>DOWNLOADS</h2>
+            <p><%= data.downloads %></p>
+        </div>
+        <div class="info-item">
+            <h2>COLOR</h2>
+            <div class="color-info-item">
+                <p><%= data.color %></p>
+                <div class="color-box" style=<%="background-color:" + data.color %>></div>
+            </div>
+        </div>
+        <div class="info-dropdown-item" onclick="dropdownOpen()">
+            <div class="info-dropdown-item-head">
+                <h2>DESCRIPTION</h2>
+                <img src="/img/dropdown-arrow.svg">
+            </div>
+            <div class="info-dropdown-item-body">
+                <div class="info-dropdown-item-container">
+                    <h3>ALT DESCRIPTION</h3>
+                    <p><%= data.alt_description %> 
+                    </p>
+                </div>
+                <div class="info-dropdown-item-container">
+                    <h3>FULL DESCRIPTION</h3>
+                    <p>
+                    <%
+                    if(data.description == null){
+                        __append("Description not provided.")
+                    } else{
+                        data.description
+                    } 
+                    %></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer><h2>FIN.</h2></footer>
+    <script src="/js/gsap.min.js"></script>
+    <script>
+        let isOpen = false
+        const dropdownOpen = () => {
+            if(isOpen){
+                gsap.to('.info-dropdown-item-body', {opacity: 0, display: 'none', duration: .2})
+                gsap.to('.info-dropdown-item-head img', {rotate: 0, duration: .2})
+                isOpen = false
+            } else{
+                gsap.to('.info-dropdown-item-body', {opacity: 1, display: 'flex', duration: .2})
+                gsap.to('.info-dropdown-item-head img', {rotate: -90, duration: .2})
+                isOpen = true
+            }
+        }
+    </script>
+    <script>  
+        const removeLoader = () => {
+            var loader = document.getElementById('loader')
+            loader.style.display = 'none'
+        }
+    </script>
+</body>
+</html>
